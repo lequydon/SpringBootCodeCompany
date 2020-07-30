@@ -1,4 +1,4 @@
-package springbootcom.laptrinhjavaweb.api;
+package com.laptrinhjavaweb.api;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.GetMapping;

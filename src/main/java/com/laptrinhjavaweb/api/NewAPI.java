@@ -1,4 +1,4 @@
-package springbootcom.laptrinhjavaweb.api;
+package com.laptrinhjavaweb.api;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
