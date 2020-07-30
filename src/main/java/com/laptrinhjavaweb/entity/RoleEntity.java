@@ -1,9 +1,12 @@
 package com.laptrinhjavaweb.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 @Entity
 @Table(name="role")
@@ -12,6 +15,8 @@ public class RoleEntity extends BaseEntity{
 	private String code;
 	@Column
 	private String name;
+    @ManyToMany(mappedBy = "roles")
+    private List<UserEntity> users = new ArrayList<>();
 	public String getCode() {
 		return code;
 	}
@@ -24,5 +29,12 @@ public class RoleEntity extends BaseEntity{
 	public void setName(String name) {
 		this.name = name;
 	}
+	public List<UserEntity> getUsers() {
+		return users;
+	}
+	public void setUsers(List<UserEntity> users) {
+		this.users = users;
+	}
+	 
 	
 }

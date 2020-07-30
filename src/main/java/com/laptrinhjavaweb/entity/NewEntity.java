@@ -4,6 +4,9 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 @Entity
 @Table(name="news")
@@ -16,6 +19,9 @@ private String thumbnail;
 private String shotdescription;
 @Column(name="content")
 private String content;
+@ManyToOne
+@JoinColumn(name="category_id")
+private CategoryEntity category;
 public String getTitle() {
 	return title;
 }
@@ -39,6 +45,12 @@ public String getContent() {
 }
 public void setContent(String content) {
 	this.content = content;
+}
+public CategoryEntity getCategory() {
+	return category;
+}
+public void setCategory(CategoryEntity category) {
+	this.category = category;
 }
 
 }
