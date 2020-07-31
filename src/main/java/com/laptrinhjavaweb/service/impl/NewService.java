@@ -3,8 +3,10 @@
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.laptrinhjavaweb.converter.NewConverter;
 import com.laptrinhjavaweb.dto.NewDTO;
 import com.laptrinhjavaweb.entity.CategoryEntity;
+import com.laptrinhjavaweb.entity.NewEntity;
 import com.laptrinhjavaweb.repository.CategoryRepository;
 import com.laptrinhjavaweb.repository.NewRepository;
 import com.laptrinhjavaweb.service.INewService;
@@ -14,10 +16,31 @@ public class NewService implements INewService {
 private NewRepository newRepository;
 @Autowired
 private CategoryRepository categoryRepository;
-@Override
+@Autowired
+private NewConverter newConverter;
+@Override// ghi đè phương thức lớp cha
 public NewDTO save(NewDTO newDTO) {
+	NewEntity newEntity =new NewEntity();
+	if(newDTO.getId()!=null) {
+		NewEntity oldNewEntity=newRepository.findOne(newDTO.getId());
+		newEntity=newConverter.toEntity(newDTO,oldNewEntity);
+	}else {
+		newEntity=newConverter.toEntity(newDTO);
+	}
 	CategoryEntity categoryEntity= categoryRepository.findOneByCode(newDTO.getCategoryCode());
 	// TODO Auto-generated method stub
-	return null;
+	newEntity.setCategory(categoryEntity);
+	newEntity=newRepository.save(newEntity);
+	return newConverter.toDTO(newEntity);
+}
+@Override
+public NewDTO update(NewDTO newDTO) {
+	NewEntity oldNewEntity=newRepository.findOne(newDTO.getId());
+	NewEntity newEntity=newConverter.toEntity(newDTO,oldNewEntity);
+	CategoryEntity categoryEntity= categoryRepository.findOneByCode(newDTO.getCategoryCode());
+	// TODO Auto-generated method stub
+	newEntity.setCategory(categoryEntity);
+	newEntity=newRepository.save(newEntity);
+	return newConverter.toDTO(newEntity); 
 }
 }
